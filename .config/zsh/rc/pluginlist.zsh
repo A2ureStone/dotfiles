@@ -52,20 +52,6 @@ zinit wait'0b' lucid as"completion" \
 	atload"source $ZHOMEDIR/rc/pluginconfig/zsh-completions_atload.zsh; zicompinit; zicdreplay" \
 	light-mode for @zsh-users/zsh-completions
 
-
-#--------------------------------#
-# prompt
-#--------------------------------#
-# -> gitstatus(powerlevel10k)
-# git_version=$(git --version | head -n1 | cut -d" " -f3)
-# if [[ "$(version3 "$git_version")" -ge "$(version3 "2.11.0")" ]]; then
-#   zinit ice lucid atload"source $ZHOMEDIR/rc/pluginconfig/git-prompt_atload.zsh"
-#   zinit light woefe/git-prompt.zsh
-# else
-#   zinit ice lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-git-prompt_atload.zsh"
-#   zinit light olivierverdier/zsh-git-prompt
-# fi
-
 zinit wait'0a' lucid \
 	if"(( ${ZSH_VERSION%%.*} > 4.4))" \
 	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \

@@ -12,29 +12,30 @@ set-option -g @plugin "tmux-plugins/vim-tmux-focus-events"
 if 'builtin command -v xdg-open > /dev/null 2>&1 ' \
   'set-option -g @plugin "tmux-plugins/tmux-open"'
 set-option -g @plugin "jschaf/tmux-newline-detector"
+
+set-option -g @nord_tmux_show_status_content "0"
+set-option -g @plugin 'nordtheme/tmux'
+#+--- Status Bars ---+
+set -g status-left "#[fg=black,bg=blue,bold] #S #[fg=blue,bg=black,nobold,noitalics,nounderscore]"
+set -g status-right "#{prefix_highlight}Online:#{online_status}#{cpu_bg_color}CPU:#{cpu_icon}#{cpu_percentage}#{ram_bg_color} RAM:#{ram_icon}#{ram_percentage} #[fg=brightblack,bg=black,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] %Y-%m-%d #[fg=white,bg=brightblack,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] %H:%M #[fg=cyan,bg=brightblack,nobold,noitalics,nounderscore]#[fg=black,bg=cyan,bold] #H "
+set-option -g status-right-length 450
+
+# TODO check for interact with nord tmux
 set-option -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+# TODO add online check
 set-option -g @plugin 'tmux-plugins/tmux-online-status'
+set-option -g @plugin 'tmux-plugins/tmux-cpu'
+
 if 'builtin command -v urlview > /dev/null 2>&1 ' \
   'set-option -g @plugin "tmux-plugins/tmux-urlview"'
 set-option -g @plugin 'Morantron/tmux-fingers'
 if 'builtin command -v fpp > /dev/null 2>&1 ' \
   'set -g @plugin "jbnicolai/tmux-fpp"'
-# set -g @plugin 'ddzero2c/tmux-easymotion' # overwrite C-j. it does not change
 set-option -g @plugin 'roy2220/easyjump.tmux'
-set-option -g @plugin 'tmux-plugins/tmux-cpu'
+
 set-option -g @plugin 'sainnhe/tmux-fzf'
 set-option -g @plugin 'laktak/extrakto'
 #set-option -g @plugin 'stephencookdev/tmux-workspace-groupings'
-
-
-#--------------------------------------------------------------#
-##          Disable Plugins                                   ##
-#--------------------------------------------------------------#
-
-## Disabled for customize coloring
-#set-option -g @plugin "jooize/tmux-powerline-theme"
-## Disabled for include my tmux.conf
-#set-option -g @plugin "#tmux-plugins/tmux-sensible"
 
 
 #--------------------------------------------------------------#
@@ -47,29 +48,6 @@ if '[ ! -d ${TMUX_PLUGIN_MANAGER_PATH}/tpm ]' \
 
 if '[ -f ${TMUX_PLUGIN_MANAGER_PATH}/tpm/tpm ]' \
   'run-shell "${TMUX_PLUGIN_MANAGER_PATH}/tpm/tpm"'
-
-
-#--------------------------------------------------------------#
-##          Non tpm plugins                                   ##
-#--------------------------------------------------------------#
-
-
-#--------------------------------------------------------------#
-##          Disable Non tpm Plugins                           ##
-#--------------------------------------------------------------#
-
-# not maintenanced -> 'tmux-plugins/tmux-cpu'
-# set -g @plugin 'samoshkin/tmux-plugin-sysstat'
-# Management is awkward. Also finger is not so slow
-# if '[ -f ~/.config/tmux/conf/scripts/install-tmux-thumbs.sh ]' \
-#   'run-shell "~/.config/tmux/conf/scripts/install-tmux-thumbs.sh"'
-# if '[ -r ~/.config/tmux/plugins/tmux-thumbs/tmux-thumbs.tmux ]' \
-#   'run-shell "~/.config/tmux/plugins/tmux-thumbs/tmux-thumbs.tmux"'
-
-# Heavy processing
-#set -g @plugin 'tmux-plugins/tmux-net-speed'
-#set -g @plugin 'samoshkin/tmux-plugin-sysstat'
-
 
 #--------------------------------------------------------------#
 ##          Plugins Config                                    ##
@@ -91,24 +69,6 @@ bind-key -n M-g  run-shell "${TMUX_PLUGIN_MANAGER_PATH}/tmux-fingers/scripts/tmu
 
 set -g @fpp-key 'v'
 
-# set -g @sysstat_cpu_view_tmpl '#[fg=#{cpu.color}]#{cpu.pused}'
-# set -g @sysstat_mem_view_tmpl '#[fg=#{mem.color}]#{mem.pused}'
-# set -g @sysstat_cpu_pused_format '%2.0f%%'
-# set -g @sysstat_mem_pused_format '%2.0f%%'
-# set -g @sysstat_mem_pfree_format '%2.0f%%'
-# set -g @sysstat_cpu_medium_threshold "75"
-# set -g @sysstat_cpu_stress_threshold "95"
-# set -g @sysstat_mem_medium_threshold "80"
-# set -g @sysstat_mem_stress_threshold "90"
-# set -g @sysstat_swap_medium_threshold "80"
-# set -g @sysstat_swap_stress_threshold "90"
-# set -g @sysstat_cpu_color_low "colour231"
-# set -g @sysstat_cpu_color_medium "colour220"
-# set -g @sysstat_cpu_color_stress "colour160"
-# set -g @sysstat_mem_color_low "colour231"
-# set -g @sysstat_mem_color_medium "blue"
-# set -g @sysstat_mem_color_stress "colour33"
-
 set -g @cpu_percentage_format '%2.0f%%'
 set -g @cpu_low_fg_color "#[fg=colour231]"
 set -g @cpu_medium_fg_color "#[fg=colour231]"
@@ -127,6 +87,3 @@ set-option -g @easyjump-label-chars "fjdkslaghrueiwoqptyvncmxzb1234567890"
 set-option -g @easyjump-label-attrs "\e[1m\e[38;5;172m"
 set-option -g @easyjump-text-attrs "\e[0m\e[38;5;237m"
 set-option -g @easyjump-smart-case "on"
-
-set -g @groupings_workspace_directory ~/.ghq
-

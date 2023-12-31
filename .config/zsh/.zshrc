@@ -70,6 +70,7 @@ source "$ZRCDIR/post_load.zsh"
 #--------------------------------------------------------------#
 source-safe "$ZHOMEDIR/.zshrc.local"
 
+bindkey "^Xa" _expand_alias
 
 if [ -n "$ZSHRC_CI_TEST" ]; then
 	echo "zshrc load complete"

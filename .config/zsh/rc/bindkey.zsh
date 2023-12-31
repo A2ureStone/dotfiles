@@ -4,13 +4,14 @@
 
 # alt keys '^[' are tmux's bindkey
 
+# stty change the terminal character, see (man stty)
 stty intr '^C'        # Ctrl+C cancel
 stty susp '^Z'        # Ctrl+Z suspend
 stty stop undef
 
 # zsh key bindings (also determine if EDITOR=vi)
-bindkey -e    # emacs like
-#bindkey -v     # vi like
+# bindkey -e    # emacs like
+bindkey -v     # vi like
 
 # remap
 bindkey -s '^[[32;2u' ' '
@@ -37,8 +38,8 @@ bindkey '^[^?' delete-char-or-list
 #bindkey '^[j' down-line-or-history
 #bindkey '^[k' up-line-or-history
 #bindkey '^[l' forward-char
-bindkey '^[[1;5C' forward-word
-bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word # ctrl ->
+bindkey '^[[1;5D' backward-word # ctrl <-
 
 ## history ##
 autoload -U history-search-end
