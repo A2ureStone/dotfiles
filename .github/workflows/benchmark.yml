@@ -1,0 +1,84 @@
+name: benchmark
+
+#on: [push]
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  # deployments permission to deploy GitHub pages website
+  deployments: write
+  # contents permission to update benchmark contents in gh-pages branch
+  contents: write
+
+jobs:
+  sync:
+    name: Sync README
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: sync
+        env:
+          TARGET_BRANCH: "gh-pages"
+        run: |
+          files=("README.md" ".github/pages/_config.yml")
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git fetch                         # fetch branches
+          git checkout $TARGET_BRANCH       # checkout to your branch
+          git checkout ${GITHUB_REF##*/} -- ${files[@]} # copy files from the source branch
+          git add -A
+          git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)
+          git push origin $TARGET_BRANCH # push to remote branch
+
+  benchmark:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    timeout-minutes: 30
+    steps:
+      - name: Update packages
+        run: pacman -Syyu --noconfirm
+      - name: Install required packages
+        run: pacman -S --noconfirm git sudo
+      - uses: actions/checkout@v4
+      - name: fatal unsafe repository (REPO is owned by someone else)
+        run: git config --global --add safe.directory /__w/dotfiles/dotfiles
+      - name: Install dotfiles
+        run: install_scripts/dotsinstaller.sh install
+      - name: Add user
+        run: useradd builduser -m
+      - name: Add sudoer
+        run: echo 'builduser ALL=(ALL) ALL' >> /etc/sudoers
+      - name: Change password
+        run: passwd -d builduser
+      - name: Install arch software
+        run: sudo -u builduser bash -c 'install_scripts/arch-extra-setup.sh'
+      - name: Install zsh plugins
+        run: zsh
+        shell: zsh -li --rcs {0}
+        env:
+          TERM: screen-256color
+          ZSHRC_CI_TEST: "true"
+      - name: Install neovim plugins
+        run: ~/.local/share/zsh/zinit/plugins/neovim---neovim/nvim-linux64/bin/nvim --headless -c 'Lazy! restore' -c 'qall'
+      - name: Install packages required benchmark
+        run: pacman -S --noconfirm time
+      - name: Run benchmark
+        run: ./.github/scripts/benchmark.sh | tee /tmp/result-benchmark.json
+        env:
+          TERM: screen-256color
+      - name: git stash
+        run: git stash
+      - name: Upload benchmark
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: customSmallerIsBetter
+          output-file-path: /tmp/result-benchmark.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          benchmark-data-dir-path: .github/pages/dev/bench
+          auto-push: true
+          comment-on-alert: true
+          fail-on-alert: false
+          alert-threshold: "150%"
+          alert-comment-cc-users: "@yutkat"
