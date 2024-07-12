@@ -396,13 +396,6 @@ zinit wait'1' lucid \
 	atload"source $ZHOMEDIR/rc/pluginconfig/mocword_atload.zsh" \
 	light-mode for @high-moctane/mocword
 
-# env #
-zinit wait'1' lucid \
-	from"gh-r" as"program" pick"direnv" \
-	atclone'./direnv hook zsh > zhook.zsh' \
-	atpull'%atclone' \
-	light-mode for @direnv/direnv
-
 # zinit wait'1' lucid \
 	# 	atinit"source $ZHOMEDIR/rc/pluginconfig/asdf_atinit.zsh" \
 	# 	atload"source $ZHOMEDIR/rc/pluginconfig/asdf_atload.zsh" \
@@ -489,83 +482,3 @@ zinit light jeffreytse/zsh-vi-mode
 # local plugins
 #==============================================================#
 [ -f "$HOME/.zshrc.plugin.local" ] && source "$HOME/.zshrc.plugin.local"
-
-
-#==============================================================#
-# old plugins
-#==============================================================#
-
-# -> trashy
-#zinit wait'1' lucid \
-	#  from"gh-r" as"program" pick"rip*/rip" \
-	#  atload"alias rm='rip --graveyard ~/.local/share/Trash'" \
-	#  light-mode for @nivekuil/rip
-# deprecated
-## after load fzf-zsh-completions
-#zinit wait'1' lucid \
-	#  atinit"FZF_PREVIEW_DISABLE_DEFAULT_BINDKEY=1" \
-	#  atload"source $ZHOMEDIR/rc/pluginconfig/fzf-preview_atload.zsh" \
-	#  light-mode for @yuki-ycino/fzf-preview.zsh
-#zinit wait'2' lucid \
-	#  atinit"source $ZHOMEDIR/rc/pluginconfig/zsh-cwd-history.zsh" \
-	#  light-mode for @ericfreese/zsh-cwd-history
-## I like per-directory-history. But it includes bugs of share history
-#zinit wait'2' lucid as"program" pick"*.plugin.zsh" \
-	#  atinit"source $ZHOMEDIR/rc/pluginconfig/zsh-directory-history.zsh" \
-	#  light-mode for @tymm/zsh-directory-history
-# -> marlonrichert/zsh-autocomplete
-#zinit ice wait'!0b' lucid ver:pu atload"source $ZHOMEDIR/rc/pluginconfig/auto-fu.zsh_atload.zsh"
-#zinit light hchbaw/auto-fu.zsh
-#zinit ice wait'1' lucid
-#zinit light "$HOME/.zsh/rc/myplugins/snippets.zsh"
-# Not compatible with auto-fu
-#zinit ice wait'0c' lucid atinit"source $ZHOMEDIR/rc/pluginconfig/fzf-ab_atload.zsh"
-#zinit light Aloxaf/fzf-tab
-# use snippet
-#zinit ice wait'0a' lucid id-as"junegunn/fzf_completions" pick"/dev/null" multisrc"shell/{completion,key-bindings}.zsh"
-#zinit light junegunn/fzf
-# -> rip
-#zinit ice wait'1' lucid from"gh-r" as"program" pick"gomi"
-#zinit light b4b4r07/gomi
-# -> exa
-#zinit ice wait'0' lucid
-#zinit light supercrabtree/k # ls
-# -> powerlevel10k
-# Too slow on ssh
-# zinit ice wait'!0' lucid atload"source $ZHOMEDIR/rc/pluginconfig/zsh-command-time_atload.zsh"
-# zinit light popstas/zsh-command-time
-# fz
-#FZFZ_RECENT_DIRS_TOOL=zshz
-#zinit ice wait'!0' lucid as"program" pick:"fzf-z.plugin.zsh"
-#zinit light andrewferrier/fzf-z
-# fasd Not updated recently
-#zinit ice pick'fasd'
-#zinit light clvv/fasd atload'eval "$(fasd --init auto)"'
-# asdf
-#zinit ice wait'!0' lucid as"program" pick:"bin/anyenv" if"[[ -d "$HOME/.config/anyenv/anyenv-install" ]]" atload'eval "$(anyenv init -)"'
-#zinit light anyenv/anyenv
-# don't maintain
-# zinit ice pick"*.sh" atinit"source $ZHOMEDIR/rc/pluginconfig/z_atinit.zsh"
-# zinit light rupa/z
-# git-prompt
-# zinit ice lucid wait"0" atload"source $ZHOMEDIR/rc/pluginconfig/zsh-async_atload.zsh && set_async"
-# zinit light mafredri/zsh-async
-
-# don't use
-# zinit ice wait'1' lucid atload"alias rm=gomi"
-# zinit light b4b4r07/zsh-gomi
-#zsh-users/zsh-syntax-highlighting # -> zdharma/fast-syntax-highlighting
-# move
-# zplug 'hchbaw/zce.zsh' # -> don't move
-
-# zplug 'felixr/docker-zsh-completion' # -> broken
-# fuzzy finder
-# unused
-#zplug 'b4b4r07/enhancd', use:init.sh
-#zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf # -> zplug grep bug
-#zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
-
-#zplug "autojump" # ->z
-#zplug "tarruda/zsh-autosuggestions" # ->auto-fu
-#zplug 'mollifier/anyframe' # -> fzf
-#zplug 'zsh-users/zaw' # -> fzf
