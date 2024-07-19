@@ -8,6 +8,9 @@
 
 bindkey "^Y" autosuggest-accept
 bindkey "^[[89;5u" autosuggest-accept
+bindkey "^a" autosuggest-accept
+bindkey "^w" forward-word
+bindkey "^e" autosuggest-execute
 #bindkey autosuggest-execute
 #bindkey autosuggest-clear
 #bindkey autosuggest-fetch
