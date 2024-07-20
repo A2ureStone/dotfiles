@@ -12,19 +12,7 @@ bind d detach
 bind A command-prompt "rename-window %%"
 bind R command-prompt "rename-session %%"
 
-# Window Selection
-bind C-w choose-window
-
-# Select session/window/pane
-bind -n M-Space choose-tree
-bind -n M-a choose-tree
-bind -n M-e choose-session
-bind -n M-w choose-tree -w
-
-# session
-bind -n M-N switch-client -n
-bind -n M-P switch-client -p
-bind -n M-Enter new-session
+# session todo 改键位
 bind -n M-s new-session
 bind -n 'M-/' run-shell "~/.config/tmux/conf/scripts/popuptmux.sh"
 
@@ -39,37 +27,13 @@ bind -n 'M-\' split-window -hc "#{pane_current_path}"
 bind - split-window -vc "#{pane_current_path}"
 bind -n  M-- split-window -vc "#{pane_current_path}"
 
-# Move panes with Vim key bindings
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
-
 # Use arrow keys to move panes
-bind -n S-left select-pane -L
-bind -n S-down select-pane -D
-bind -n S-up select-pane -U
-bind -n S-right select-pane -R
-bind -n M-S-left select-pane -L
-bind -n M-S-down select-pane -D
-bind -n M-S-up select-pane -U
-bind -n M-S-right select-pane -R
 bind -n M-H select-pane -L
 bind -n M-J select-pane -D
 bind -n M-K select-pane -U
 bind -n M-L select-pane -R
 
-# Quickly switch to copy mode
-bind -n C-M-up copy-mode
-bind -n C-M-down paste-buffer
-bind -n C-M-k copy-mode
-bind -n C-M-j paste-buffer
-
 # Move window
-bind -n M-left previous-window
-bind -n M-right next-window
-bind -n M-up new-window -c "#{pane_current_path}"
-bind -n M-down confirm-before 'kill-window'
 bind -n M-h previous-window
 bind -n M-j confirm-before 'kill-window'
 bind -n M-k new-window -c "#{pane_current_path}"
@@ -157,7 +121,7 @@ bind E set-window-option synchronize-panes off \;\
 # Send command to all window
 bind C-e command-prompt -p "session?,message?" "run-shell \"tmux list-windows -t %1 \| cut -d: -f1\| xargs -I\{\} tmux send-keys -t %1:\{\} %2 Enter\""
 
-# quick layout switch
+# todo quick layout switch
 bind-key -n M-. next-layout
 # bind-key -n M-1 select-layout even-horizontal
 # bind-key -n M-2 select-layout even-vertical
@@ -195,9 +159,9 @@ bind ] paste-buffer
 bind C-] choose-buffer
 
 # kill the pane
-bind C-x confirm-before 'kill-pane'
+bind x confirm-before 'kill-pane'
 # kill the window
-bind C-X confirm-before 'kill-window'
+bind C-x confirm-before 'kill-window'
 # kill the session
 bind q confirm-before 'kill-session'
 # Kill tmux itself (including server and client)
