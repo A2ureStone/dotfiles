@@ -193,11 +193,8 @@ zinit wait'0' lucid \
 	atinit"source $ZHOMEDIR/rc/pluginconfig/zsh-completion-generator_atinit.zsh" \
 	light-mode for @RobSis/zsh-completion-generator
 
-# not work
-#zinit wait'2' lucid \
-#	light-mode for @hlissner/zsh-autopair
-#zinit ice lucid wait
-#zinit light-mode for @hlissner/zsh-autopair
+zinit wait'0' lucid \
+	light-mode for @hlissner/zsh-autopair
 
 # cannot be disabled bindkey '^T' zsh-startify
 #zplugin wait'2' lucid \
