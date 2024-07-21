@@ -206,52 +206,9 @@ zinit wait'0' lucid \
 #--------------------------------#
 # enhancive command
 #--------------------------------#
-zinit wait'1' lucid \
-	from"gh-r" as"program" pick"eza" \
-	atload"source $ZHOMEDIR/rc/pluginconfig/eza_atload.zsh" \
-	light-mode for @eza-community/eza
-
-zinit wait'1' lucid blockf nocompletions \
-	from"gh-r" as'program' pick'ripgrep*/rg' \
-	cp"ripgrep-*/complete/_rg -> _rg" \
-	atclone'chown -R $(id -nu):$(id -ng) .; zinit creinstall -q BurntSushi/ripgrep' \
-	atpull'%atclone' \
-	light-mode for @BurntSushi/ripgrep
-
-zinit wait'1' lucid blockf nocompletions \
-	from"gh-r" as'program' cp"fd-*/autocomplete/_fd -> _fd" pick'fd*/fd' \
-	atclone'chown -R $(id -nu):$(id -ng) .; zinit creinstall -q sharkdp/fd' \
-	atpull'%atclone' \
-	light-mode for @sharkdp/fd
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" cp"bat/autocomplete/bat.zsh -> _bat" pick"bat*/bat" \
-	atload"export BAT_THEME='Nord'; alias cat=bat" \
-	light-mode for @sharkdp/bat
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" \
-	atload"alias tp='trash put'" \
-	light-mode for @oberblastmeister/trashy
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" mv'tealdeer* -> tldr' \
-	light-mode for @dbrgn/tealdeer
-zinit ice wait'1' lucid as"completion" mv'zsh_tealdeer -> _tldr'
-zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" bpick'*linux*' \
-	light-mode for @dalance/procs
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" pick"delta*/delta" \
-	atload"compdef _gnu_generic delta" \
-	light-mode for @dandavison/delta
-
-zinit wait'1' lucid \
-	from"gh-r" as"program" pick"mmv*/mmv" \
-	light-mode for @itchyny/mmv
+#zinit wait'1' lucid \
+#	from"gh-r" as"program" pick"mmv*/mmv" \
+#	light-mode for @itchyny/mmv
 
 
 #--------------------------------#
@@ -281,16 +238,6 @@ if [[ "${ZSH_INSTALL}" == "true" ]]; then
 			for @zsh-users/zsh
 	fi
 fi
-
-
-# neovim
-zinit wait'0' lucid nocompletions \
-	from'gh-r' ver'nightly' as'program' bpick'*tar.gz' \
-	atclone"command cp -rf nvim*/* $ZPFX; echo "" > ._zinit/is_release" \
-	atpull'%atclone' \
-	run-atpull \
-	atload"source $ZHOMEDIR/rc/pluginconfig/neovim_atload.zsh" \
-	light-mode for @neovim/neovim
 
 
 # node (for coc.nvim)
