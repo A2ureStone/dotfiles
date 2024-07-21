@@ -193,11 +193,8 @@ zinit wait'0' lucid \
 	atinit"source $ZHOMEDIR/rc/pluginconfig/zsh-completion-generator_atinit.zsh" \
 	light-mode for @RobSis/zsh-completion-generator
 
-# not work
-#zinit wait'2' lucid \
-#	light-mode for @hlissner/zsh-autopair
-#zinit ice lucid wait
-#zinit light-mode for @hlissner/zsh-autopair
+zinit wait'0' lucid \
+	light-mode for @hlissner/zsh-autopair
 
 # cannot be disabled bindkey '^T' zsh-startify
 #zplugin wait'2' lucid \
@@ -285,18 +282,6 @@ if [[ "${ZSH_INSTALL}" == "true" ]]; then
 	fi
 fi
 
-# git
-if builtin command -v make > /dev/null 2>&1; then
-	zinit wait'0' lucid nocompile \
-		id-as=git as='null|readurl' \
-		mv"%ID% -> git.tar.gz" \
-		atclone'ziextract --move --auto git.tar.gz && \
-		make -j $[$(grep cpu.cores /proc/cpuinfo | sort -u | sed "s/[^0-9]//g") + 1] prefix=$ZPFX all install && \
-		\rm -rf $ZINIT[SNIPPETS_DIR]/git/*' \
-		atpull"%atclone" \
-		dlink='/git/git/archive/refs/tags/v%VERSION%.tar.gz' \
-		for https://github.com/git/git/tags/
-fi
 
 # neovim
 zinit wait'0' lucid nocompletions \
@@ -307,15 +292,6 @@ zinit wait'0' lucid nocompletions \
 	atload"source $ZHOMEDIR/rc/pluginconfig/neovim_atload.zsh" \
 	light-mode for @neovim/neovim
 
-# wezterm
-# test $(openssl version | awk '{print $2}' | awk -F '.' '{print $1}') -eq 1
-# -> bpick"*20.04.tar.xz"
-zinit wait'2' lucid nocompletions \
-	from"gh-r" ver"nightly"  as"program" bpick"*22.04.tar.xz" \
-	atclone"command cp -rf wezterm/usr/* $ZPFX; ln -snf $ZPFX/bin/wezterm ~/.local/bin/x-terminal-emulator; echo "" > ._zinit/is_release" \
-	atpull'%atclone' \
-	run-atpull \
-	light-mode for @wez/wezterm
 
 # node (for coc.nvim)
 # zinit wait'0' lucid id-as=node as='readurl|command' \
